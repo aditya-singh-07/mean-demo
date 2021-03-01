@@ -1,0 +1,40 @@
+<h1>{{mode}} post</h1>
+<!-- <div class="text-center">
+  <div class="spinner-border text-primary" role="status" *ngIf="isloading">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div> -->
+
+<mat-spinner *ngIf="isloading" [ngStyle]="{'margin':'auto'}"></mat-spinner>
+<mat-card  class="card" *ngIf="!isloading">
+<mat-card-header>
+  <div mat-card-avatar></div>
+</mat-card-header>
+<form (submit)="savepost(postform)" #postform="ngForm" >
+ <mat-form-field appearance="outline" class="input-full-width">
+    <mat-label>title</mat-label>
+    <input matInput type="text" name="title" [ngModel]="post?.title" required #title="ngModel" maxlength="10">
+    <mat-hint align="end">{{title.value?.length || 0}}/10</mat-hint>
+    <mat-error *ngIf="title.invalid">Please Enter title</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="input-full-width">
+    <mat-label>Content</mat-label>
+    <input matInput type="text" name="content" [ngModel]="post?.description" required #content="ngModel" maxlength="255" >
+    <mat-hint align="end">{{ content.value?.length || 0 }}/255</mat-hint>
+    <mat-error *ngIf="content.invalid">"Please Enter content</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="input-full-width">
+    <mat-label>Comment</mat-label>
+    <input matInput type="text"  name="comment" [ngModel]="post?.comment" required #comment="ngModel">
+    <mat-hint align="end">{{ comment.value?.length || 0 }}/255</mat-hint>
+    <mat-error *ngIf="comment.invalid">"Please Enter Comment</mat-error>
+  </mat-form-field>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" type="submit">{{mode}}</button>
+  </mat-card-actions>
+</form>
+</mat-card>
+
+
+
+

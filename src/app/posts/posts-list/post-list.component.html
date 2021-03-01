@@ -1,0 +1,20 @@
+<mat-spinner *ngIf="isloading" [ngStyle]="{'margin':'auto'}"></mat-spinner>
+  <mat-accordion multi=true *ngIf="post.length>0 && !isloading" >
+    <mat-expansion-panel  *ngFor="let posts of post">
+    <mat-expansion-panel-header>
+    <mat-panel-title>
+    {{posts.title}}
+    </mat-panel-title>
+    <mat-panel-description>
+   {{posts.description}}
+    </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p >{{posts.comment}} </p>
+    <mat-action-row>
+      <button mat-stroked-button color="primary" type="submit" [routerLink]="['/edit', posts.id]">Edit</button>
+      <button mat-stroked-button color="warn" (click)="deletepostbyid(posts.id)" type="submit">Delete</button>
+    </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+<p class="mat-body-2" *ngIf="post.length<=0 && !isloading">No post found</p>

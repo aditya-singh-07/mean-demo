@@ -10,6 +10,9 @@
     </mat-panel-description>
     </mat-expansion-panel-header>
     <p >{{posts.comment}} </p>
+    <div class="imagepreview" >
+      <img [src]="posts.imagepath" [alt]="posts.title">
+    </div>
     <mat-action-row>
       <button mat-stroked-button color="primary" type="submit" [routerLink]="['/edit', posts.id]">Edit</button>
       <button mat-stroked-button color="warn" (click)="deletepostbyid(posts.id)" type="submit">Delete</button>

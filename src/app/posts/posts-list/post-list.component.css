@@ -6,3 +6,10 @@
 mat-spinner{
   zoom: 0.2;
 }
+.imagepreview{
+  height: 5rem;
+  margin-top: 1rem;
+  }
+  .imagepreview img{
+    height: 100%;
+    }

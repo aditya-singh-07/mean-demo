@@ -19,7 +19,8 @@ getposts(){
         id:newpost._id,
         title:newpost.title,
         description:newpost.description,
-        comment:newpost.comment
+        comment:newpost.comment,
+        imagepath:newpost.imagepath
       };
     });
   }))
@@ -35,19 +36,29 @@ getpostupdate(){
 
 }
 
-addpost(title:string,content:string,comment:string){
-const post :Post={
-  id:null,
+addpost(title:string,content:string,image:File,comment:string){
+// const post :Post={
+//   id:null,
+//   title:title,
+//   description:content,
+//   comment:comment,
+
+// };
+  const formdata=new FormData();
+formdata.append("title", title);
+formdata.append("description", content);
+formdata.append("image", image,title);
+formdata.append("comment", comment);
+this.http.post<{message: string,post:Post}>('http://localhost:3000/posts', formdata).subscribe((res)=>{
+  console.log(res.message);
+  const post :Post={
+  id:res.post.id,
   title:title,
   description:content,
   comment:comment,
+  imagepath: res.post.imagepath
 
 };
-//console.log(post)
-this.http.post<{message: string,pid:string}>('http://localhost:3000/posts', post).subscribe((res)=>{
-  console.log(res.message);
-  const id=res.pid;
-  post.id=id;
   this.posts.push(post);
   this.postupdate.next([...this.posts]);
 });
@@ -64,21 +75,46 @@ deletepost(id:string){
 
 getpostid(id:string){
   //console.log(this.posts.find(p =>p.id== id))
-  return this.http.get<{_id:string,title:string,description:string,comment:string}>('http://localhost:3000/posts/'+ id);
+  return this.http.get<{_id:string,title:string,description:string,comment:string,imagepath:string}>('http://localhost:3000/posts/'+ id);
 }
 
-updatepost(id:string,title:string,content:string,comment:string){
-  const post :Post={
+updatepost(id:string,title:string,content:string,comment:string,image:File | string){
+  // const post :Post={
+  //   id:id,
+  //   title:title,
+  //   description:content,
+  //   comment:comment,
+  //   imagepath:null
+  // };
+  let formdata: Post | FormData;
+  if(typeof(image== 'Object')){
+
+  formdata=new FormData();
+  formdata.append("id",id),
+  formdata.append("title", title);
+  formdata.append("description", content);
+  formdata.append("image", image,title);
+  formdata.append("comment", comment);
+  }else{
+    formdata={
     id:id,
     title:title,
     description:content,
     comment:comment,
-
+    imagepath:image
   };
-  this.http.put('http://localhost:3000/posts/'+ id,post).subscribe(res =>{
+  }
+  this.http.put('http://localhost:3000/posts/'+ id,formdata).subscribe(res =>{
     console.log(res);
+    const post:Post={
+      id:id,
+      title:title,
+      description:content,
+      comment:comment,
+      imagepath:""
+    };
     const update= [...this.posts];
-    const oldpost=update.findIndex(p =>{p.id == post.id});
+    const oldpost=update.findIndex(p =>{p.id == id});
     update[oldpost]=post;
     this.posts=update;
     this.postupdate.next([...this.posts]);

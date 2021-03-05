@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PostCreateComponent } from './posts/post-create/Post-Create.component';
-import { FormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {  MatInputModule,
           MatCardModule,
@@ -16,12 +16,14 @@ import {  MatInputModule,
           MatProgressSpinnerModule}
 from '@angular/material';
 import { PostlistComponent } from './posts/posts-list/post-list.component';
+import { ContactusComponent } from './posts/contactus/contactus.component';
 @NgModule({
   declarations: [
     AppComponent,
     PostCreateComponent,
     HeaderComponent,
-    PostlistComponent
+    PostlistComponent,
+    ContactusComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +37,7 @@ import { PostlistComponent } from './posts/posts-list/post-list.component';
     MatIconModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
+    ReactiveFormsModule,
     HttpClientModule
 
 

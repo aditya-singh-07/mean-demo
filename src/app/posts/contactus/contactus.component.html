@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Contact us</mat-card-title>
+  </mat-card-header>
+  <mat-form-field appearance="outline" class="input-full-width">
+    <mat-label>Username</mat-label>
+    <input matInput type="text" name="username" ngModel required #username="ngModel">
+    <mat-error *ngIf="username.invalid">Please enter username </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="input-full-width">
+    <mat-label>Query</mat-label>
+    <input matInput type="text" name="query" ngModel required #query="ngModel">
+    <mat-error *ngIf="query.invalid">Please enter query </mat-error>
+  </mat-form-field>
+  <mat-card-actions>
+    <button mat-raised-button color="primary">Submit </button>
+  </mat-card-actions>
+</mat-card>
+

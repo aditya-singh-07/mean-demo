@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import {Post } from '../post.model'
 import { Subscription } from 'rxjs';
 import { expand, flyInOut } from 'src/app/animations/app.animation';
+import { PageEvent } from '@angular/material';
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
@@ -19,6 +20,10 @@ import { expand, flyInOut } from 'src/app/animations/app.animation';
 export class PostlistComponent implements OnInit, OnDestroy{
   panelOpenState=false;
   isloading:boolean=false;
+  length = 0;
+  pageSize = 2;
+  currentpage=1;
+  pageSizeOptions: number[] = [1, 2, 5, 10];
  private sub:Subscription;
 //  post=[
 // { title: "Android 10",
@@ -38,16 +43,29 @@ constructor(public postservice:PostService){
   }
 ngOnInit(){
   this.isloading=true;
- this.postservice.getposts();
-  this.sub=this.postservice.getpostupdate().subscribe((Posts:Post[])=> {
+ this.postservice.getposts(this.pageSize,this.currentpage);
+  this.sub=this.postservice.getpostupdate().subscribe((postdata:{Posts:Post[], postcount:number})=> {
     this.isloading=false;
-    this.post=Posts;
+    this.length=postdata.postcount;
+    this.post=postdata.Posts;
   });
 
 }
 
 deletepostbyid(postid: string){
-  this.postservice.deletepost(postid);
+  this.isloading=true;
+  this.postservice.deletepost(postid).subscribe(res =>{
+    console.log("deleted!");
+    this.postservice.getposts(this.pageSize,this.currentpage);
+  });
+}
+
+onPageChange(pageinfo:PageEvent){
+this.isloading=true;
+console.log(pageinfo)
+this.currentpage=pageinfo.pageIndex +1;
+this.pageSize=pageinfo.pageSize;
+this.postservice.getposts(this.pageSize,this.currentpage);
 }
 
 }

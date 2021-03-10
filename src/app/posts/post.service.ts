@@ -7,14 +7,15 @@ import { Title } from '@angular/platform-browser';
 @Injectable({providedIn:'root'})
 export class PostService{
   private posts: Post[]=[];
-  private postupdate=new Subject<Post[]>();
+  private postupdate=new Subject<{Posts: Post[], postcount:number}>();
 
   constructor(private http:HttpClient){}
 
-getposts(){
-  this.http.get<{message: string, All_Posts: any}>('http://localhost:3000/posts')
+getposts(perpage:number, currentpage: number){
+  const queryparam=`?pagesize=${perpage}&page=${currentpage}`;
+  this.http.get<{message: string, All_Posts: any, maxposts:number}>('http://localhost:3000/posts' + queryparam)
   .pipe(map((postchange) =>{
-    return postchange.All_Posts.map(newpost =>{
+    return {post: postchange.All_Posts.map(newpost =>{
       return {
         id:newpost._id,
         title:newpost.title,
@@ -22,12 +23,12 @@ getposts(){
         comment:newpost.comment,
         imagepath:newpost.imagepath
       };
-    });
+    }),maxposts: postchange.maxposts};
   }))
   .subscribe((postdata)=>
   {
-    this.posts=postdata;
-    this.postupdate.next([...this.posts]);
+    this.posts=postdata.post;
+    this.postupdate.next({Posts: [...this.posts],postcount:postdata.maxposts });
   });
 //return [...this.posts];
 }
@@ -50,28 +51,38 @@ formdata.append("description", content);
 formdata.append("image", image,title);
 formdata.append("comment", comment);
 this.http.post<{message: string,post:Post}>('http://localhost:3000/posts', formdata).subscribe((res)=>{
-  console.log(res.message);
-  const post :Post={
-  id:res.post.id,
-  title:title,
-  description:content,
-  comment:comment,
-  imagepath: res.post.imagepath
+/////////////////// no need now ////////////////////////////
+//   console.log(res.message);
+//   const post :Post={
+//   id:res.post.id,
+//   title:title,
+//   description:content,
+//   comment:comment,
+//   imagepath: res.post.imagepath
 
-};
-  this.posts.push(post);
-  this.postupdate.next([...this.posts]);
+// };
+//   this.posts.push(post);
+//   this.postupdate.next([...this.posts]);
+/////////////////// no need now ////////////////////////////
 });
 }
 
+/////////////////// no need now ////////////////////////////
+
+// deletepost(id:string){
+//   this.http.delete('http://localhost:3000/posts/'+ id).subscribe(res =>{
+//     console.log("deleted!");
+//     const postupdates=this.posts.filter(postdb =>postdb.id !== id );
+//     this.posts=postupdates;
+//     this.postupdate.next([...this.posts]);
+//   });
+// }
+/////////////////// no need now ////////////////////////////
+
 deletepost(id:string){
-  this.http.delete('http://localhost:3000/posts/'+ id).subscribe(res =>{
-    console.log("deleted!");
-    const postupdates=this.posts.filter(postdb =>postdb.id !== id );
-    this.posts=postupdates;
-    this.postupdate.next([...this.posts]);
-  });
+  return this.http.delete('http://localhost:3000/posts/'+ id);
 }
+
 
 getpostid(id:string){
   //console.log(this.posts.find(p =>p.id== id))
@@ -105,19 +116,23 @@ updatepost(id:string,title:string,content:string,comment:string,image:File | str
   };
   }
   this.http.put('http://localhost:3000/posts/'+ id,formdata).subscribe(res =>{
-    console.log(res);
-    const post:Post={
-      id:id,
-      title:title,
-      description:content,
-      comment:comment,
-      imagepath:""
-    };
-    const update= [...this.posts];
-    const oldpost=update.findIndex(p =>{p.id == id});
-    update[oldpost]=post;
-    this.posts=update;
-    this.postupdate.next([...this.posts]);
+    /////////////////// no need now ////////////////////////////
+
+    // console.log(res);
+    // const post:Post={
+    //   id:id,
+    //   title:title,
+    //   description:content,
+    //   comment:comment,
+    //   imagepath:""
+    // };
+    // const update= [...this.posts];
+    // const oldpost=update.findIndex(p =>{p.id == id});
+    // update[oldpost]=post;
+    // this.posts=update;
+    // this.postupdate.next([...this.posts]);
+
+    /////////////////// no need now ////////////////////////////
   });
 
 }

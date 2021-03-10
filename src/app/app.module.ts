@@ -13,7 +13,8 @@ import {  MatInputModule,
           MatToolbarModule,
           MatIconModule,
           MatExpansionModule,
-          MatProgressSpinnerModule}
+          MatProgressSpinnerModule,
+          MatPaginatorModule}
 from '@angular/material';
 import { PostlistComponent } from './posts/posts-list/post-list.component';
 import { ContactusComponent } from './posts/contactus/contactus.component';
@@ -38,6 +39,7 @@ import { ContactusComponent } from './posts/contactus/contactus.component';
     MatExpansionModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
+    MatPaginatorModule,
     HttpClientModule
 
 

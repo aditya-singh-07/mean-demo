@@ -19,5 +19,7 @@
     </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
-
+  <mat-paginator
+   [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" *ngIf="post.length>0" >
+</mat-paginator>
 <p class="mat-body-2" *ngIf="post.length<=0 && !isloading">No post found</p>

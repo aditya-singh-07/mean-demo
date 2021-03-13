@@ -1,0 +1,33 @@
+<mat-card  class="card" [ngStyle]= "{'border-radius': '10px', 'margin-top': '5%'}" [class.mat-elevation-z8]="true" >
+  <!-- <mat-icon style="width: 100px; height:100px" svgIcon="logo"></mat-icon> -->
+  <div class="brandlogo" fxLayoutAlign="center" fxHide.md  fxHide.sm fxHide.xs>
+  <label style="font-size:24px;letter-spacing:1px;" >Login</label>
+  </div>
+
+    <form (submit)="addlogin(postform)" #postform="ngForm"  [ngStyle]="{'margin-top': '2%'}">
+    <mat-form-field appearance="outline" class="input-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="text" name="Email" ngModel required Email #email="ngModel">
+        <mat-hint align="end">{{email.value?.length || 0}}/10</mat-hint>
+        <mat-error *ngIf="email.invalid">Please Enter Email</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="text" name="Password" ngModel required #password="ngModel" maxlength="255" >
+        <mat-hint align="end">{{ password.value?.length || 0 }}/255</mat-hint>
+        <mat-error *ngIf="password.invalid">"Please Enter Password</mat-error>
+      </mat-form-field>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" [ngStyle]="{'margin-left': '2%','border-radius': '5px'}" type="submit">Login</button>
+      </mat-card-actions>
+    </form>
+    </mat-card>
+    <mat-card
+    [class.mat-elevation-z8]="true"
+     [ngStyle]="{'margin-top': '5%','border-radius': '10px'}"
+    class="signuplink-content">
+     <mat-card-header>
+       <mat-card-subtitle [ngStyle]="{'color':'#000'}" >Did you signup ?  <a mat-button color="primary" routerLink="/signup">Signup here</a> </mat-card-subtitle>
+
+     </mat-card-header>
+   </mat-card>

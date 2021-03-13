@@ -3,17 +3,29 @@
   <span>Post app </span>
   <span class="example-spacer"></span>
 
-  <a mat-button routerLink="/" >
-    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon" [ngStyle]="{'margin-right': '10px'}"  >add</mat-icon>
+  <a mat-button *ngIf="islogin" routerLink="postcreate" >
+    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon" [ngStyle]="{'margin-right': '3px'}"  >add</mat-icon>
     Add Post
   </a>
 
-  <a mat-button routerLink="postlist">
-    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" [ngStyle]="{'margin-right': '10px'}"   >list</mat-icon>
+  <a mat-button *ngIf="islogin" routerLink="/postlist">
+    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" [ngStyle]="{'margin-right': '3px'}"   >list</mat-icon>
     List
   </a>
-  <a mat-button routerLink="contact">
-    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" [ngStyle]="{'margin-right': '10px'}"   >contact_support</mat-icon>
+  <a mat-button *ngIf="!islogin" routerLink="/login">
+    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" [ngStyle]="{'margin-right': '3px'}"   >login</mat-icon>
+    login
+  </a>
+  <a mat-button *ngIf="!islogin" routerLink="/signup">
+    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" [ngStyle]="{'margin-right': '3px'}"   >login</mat-icon>
+    Signup
+  </a>
+  <a mat-button *ngIf="islogin">
+    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" [ngStyle]="{'margin-right': '3px'}"   >logout</mat-icon>
+    Logout
+  </a>
+  <a mat-button routerLink="/contact">
+    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" [ngStyle]="{'margin-right': '3px'}"   >contact_support</mat-icon>
     contact us
   </a>
 </mat-toolbar-row>

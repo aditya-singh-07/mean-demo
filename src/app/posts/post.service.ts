@@ -4,12 +4,13 @@ import { Subject } from 'rxjs';
 import {map} from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 @Injectable({providedIn:'root'})
 export class PostService{
   private posts: Post[]=[];
   private postupdate=new Subject<{Posts: Post[], postcount:number}>();
 
-  constructor(private http:HttpClient){}
+  constructor(private http:HttpClient,public router:Router){}
 
 getposts(perpage:number, currentpage: number){
   const queryparam=`?pagesize=${perpage}&page=${currentpage}`;
@@ -51,6 +52,7 @@ formdata.append("description", content);
 formdata.append("image", image,title);
 formdata.append("comment", comment);
 this.http.post<{message: string,post:Post}>('http://localhost:3000/posts', formdata).subscribe((res)=>{
+
 /////////////////// no need now ////////////////////////////
 //   console.log(res.message);
 //   const post :Post={
@@ -65,6 +67,7 @@ this.http.post<{message: string,post:Post}>('http://localhost:3000/posts', formd
 //   this.postupdate.next([...this.posts]);
 /////////////////// no need now ////////////////////////////
 });
+this.router.navigate(['/postlist']);
 }
 
 /////////////////// no need now ////////////////////////////
@@ -134,6 +137,6 @@ updatepost(id:string,title:string,content:string,comment:string,image:File | str
 
     /////////////////// no need now ////////////////////////////
   });
-
+  this.router.navigate(['/postlist']);
 }
 }

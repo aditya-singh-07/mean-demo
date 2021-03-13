@@ -1,0 +1,11 @@
+.login-content {
+  margin-left: 4%;
+  margin-right: 4%;
+}
+
+input,mat-form-field{
+  width: 100%;
+}
+.title{
+  margin-top:10%;
+}

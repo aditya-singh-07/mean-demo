@@ -65,10 +65,10 @@ constructor(public postservice:PostService,public router:Router,public routeract
     this.isloading=true;
     if(this.mode== 'create'){
       this.postservice.addpost(this.form.value.title,this.form.value.content,this.form.value.image,this.form.value.comment);
-      this.router.navigate(['/postlist']);
+
     }else{
       this.postservice.updatepost(this.postid,this.form.value.title,this.form.value.content,this.form.value.comment,this.form.value.image);
-      this.router.navigate(['/postlist']);
+
     }
 
     this.form.reset();

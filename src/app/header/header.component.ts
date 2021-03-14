@@ -22,4 +22,7 @@ this.Authlistner=this.Authservice.getauthstatus().subscribe(isauth =>{
 ngOnDestroy(){
 this.Authlistner.unsubscribe();
 }
+onlogout(){
+  this.Authservice.logout();
+}
 }

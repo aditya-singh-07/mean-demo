@@ -13,7 +13,7 @@
     <div class="imagepreview" >
       <img [src]="posts.imagepath" [alt]="posts.title">
     </div>
-    <mat-action-row>
+    <mat-action-row *ngIf="islogin">
       <button mat-stroked-button color="primary" type="submit" [routerLink]="['/edit', posts.id]">Edit</button>
       <button mat-stroked-button color="warn" (click)="deletepostbyid(posts.id)" type="submit">Delete</button>
     </mat-action-row>

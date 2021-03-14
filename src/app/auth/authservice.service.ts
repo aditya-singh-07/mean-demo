@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -9,11 +10,16 @@ import { Signup } from './signup/signup.model';
 })
 export class AuthserviceService {
 private token:string;
+private isauth:boolean=false;
 private Authlistner=new Subject<boolean>();
 
-constructor(private http:HttpClient) { }
+constructor(private http:HttpClient, private router:Router) { }
 getToken(){
   return this.token;
+}
+
+getisauth(){
+  return this.isauth;
 }
 
 getauthstatus(){
@@ -38,8 +44,19 @@ loginuser(email:string,password:string){
     this.http.post<{token:string}>('http://localhost:3000/users/login' , authlogin).subscribe(res =>{
     const authtoken=res.token;
     this.token=authtoken;
-    this.Authlistner.next(true);
+    if(authtoken){
+      this.isauth=true;
+      this.Authlistner.next(true);
+    }
+
     });
+    this.router.navigate(['/postlist']);
   }
+
+logout(){
+  this.token=null;
+  this.isauth=false;
+  this.Authlistner.next(false);
+}
 
 }

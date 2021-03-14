@@ -3,12 +3,12 @@
   <span>Post app </span>
   <span class="example-spacer"></span>
 
-  <a mat-button *ngIf="islogin" routerLink="postcreate" >
+  <a mat-button *ngIf="islogin" routerLink="/postcreate" >
     <mat-icon class="example-icon" aria-hidden="false" aria-label="Example heart icon" [ngStyle]="{'margin-right': '3px'}"  >add</mat-icon>
     Add Post
   </a>
 
-  <a mat-button *ngIf="islogin" routerLink="/postlist">
+  <a mat-button routerLink="/postlist">
     <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" [ngStyle]="{'margin-right': '3px'}"   >list</mat-icon>
     List
   </a>
@@ -20,7 +20,7 @@
     <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" [ngStyle]="{'margin-right': '3px'}"   >login</mat-icon>
     Signup
   </a>
-  <a mat-button *ngIf="islogin">
+  <a mat-button *ngIf="islogin" (click)="onlogout()">
     <mat-icon class="example-icon" aria-hidden="false" aria-label="Example delete icon" [ngStyle]="{'margin-right': '3px'}"   >logout</mat-icon>
     Logout
   </a>

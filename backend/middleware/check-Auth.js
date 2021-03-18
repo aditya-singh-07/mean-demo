@@ -1,5 +1,4 @@
 const jwt=require('jsonwebtoken')
-const config=require('../config/build.config')
 const PRIVATEKEY = "hello"
 module.exports=(req,res,next) =>{
   try{

@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  public isloading:boolean;
   constructor(private Authservice:AuthserviceService) { }
   date=new Date();
 
@@ -19,6 +19,9 @@ export class LoginComponent implements OnInit {
       return;
     }
     console.log(form.value)
+    this.isloading=true;
    this.Authservice.loginuser(form.value.Email,form.value.Password);
+   this.isloading=this.Authservice.isloading;
+
   }
 }

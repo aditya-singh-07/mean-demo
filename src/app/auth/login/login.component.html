@@ -18,7 +18,10 @@
         <mat-error *ngIf="password.invalid">"Please Enter Password</mat-error>
       </mat-form-field>
       <mat-card-actions>
-        <button mat-raised-button color="primary" [ngStyle]="{'margin-left': '2%','border-radius': '5px'}" type="submit">Login</button>
+        <button mat-raised-button color="primary" [ngStyle]="{'margin-left': '2%','border-radius': '5px'}" type="submit">Login
+          <mat-icon *ngIf="isloading"><mat-spinner color="accent" diameter="20">
+          </mat-spinner></mat-icon>
+        </button>
       </mat-card-actions>
     </form>
     </mat-card>

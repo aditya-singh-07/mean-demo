@@ -52,9 +52,11 @@ loginuser(email:string,password:string){
       const expireDuration=res.expireIn;
       this.isauth=true;
       this.Authlistner.next(true);
-      this.tokenTimer= setTimeout(() =>{
-        this.logout();
-      }, expireDuration *1000)
+      const date=new Date();
+      const expire= new Date(date.getTime() + expireDuration * 1000);
+      this.saveAuth(this.token,expire)
+      this.SetAuthTimer(expireDuration);
+      // console.log(expire)
       setTimeout(() => {
         this.router.navigate(['/postlist']);
        },2000)
@@ -67,8 +69,44 @@ logout(){
   this.token=null;
   this.isauth=false;
   this.Authlistner.next(false);
+  this.removeSaveAuth();
   this.router.navigate(['/login']);
   clearTimeout(this.tokenTimer);
+}
+private SetAuthTimer(expireDuration:number){
+  this.tokenTimer= setTimeout(() =>{
+    this.logout();
+  }, expireDuration *1000)
+}
+Autologin(){
+const authinfo=this.getauth();
+const expireTimer=authinfo.expireIn.getTime() - new Date().getTime();
+if(expireTimer >0){
+  this.token=authinfo.token;
+  this.isauth=true;
+  this.Authlistner.next(true);
+  this.SetAuthTimer(expireTimer/1000);
+}
+}
+private saveAuth(token:string,expiredate: Date){
+localStorage.setItem('token',token );
+localStorage.setItem('expireDate',expiredate.toISOString())
+}
+private removeSaveAuth(){
+  localStorage.removeItem('token');
+  localStorage.removeItem('expireDate');
+}
+private getauth(){
+const token=localStorage.getItem('token');
+const expireIn=localStorage.getItem('expireDate');
+if(!token || !expireIn){
+return;
+}
+return {
+  token: token,
+  expireIn:new Date(expireIn)
+  }
+
 }
 
 }

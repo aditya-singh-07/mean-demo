@@ -12,6 +12,7 @@ export class AuthserviceService {
 private token:string;
 private isauth:boolean=false;
 public isloading:boolean;
+tokenTimer: any;
 private Authlistner=new Subject<boolean>();
 
 constructor(private http:HttpClient, private router:Router) { }
@@ -43,13 +44,17 @@ loginuser(email:string,password:string){
     password:password
   };
   this.isloading=true;
-    this.http.post<{token:string}>('http://localhost:3000/users/login' , authlogin).subscribe(res =>{
+    this.http.post<{token:string, expireIn:number}>('http://localhost:3000/users/login' , authlogin).subscribe(res =>{
     const authtoken=res.token;
     this.token=authtoken;
     this.isloading=false;
     if(authtoken){
+      const expireDuration=res.expireIn;
       this.isauth=true;
       this.Authlistner.next(true);
+      this.tokenTimer= setTimeout(() =>{
+        this.logout();
+      }, expireDuration *1000)
       setTimeout(() => {
         this.router.navigate(['/postlist']);
        },2000)
@@ -63,6 +68,7 @@ logout(){
   this.isauth=false;
   this.Authlistner.next(false);
   this.router.navigate(['/login']);
+  clearTimeout(this.tokenTimer);
 }
 
 }

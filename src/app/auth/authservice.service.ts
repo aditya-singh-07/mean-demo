@@ -80,6 +80,9 @@ private SetAuthTimer(expireDuration:number){
 }
 Autologin(){
 const authinfo=this.getauth();
+if(!authinfo){
+  return;
+}
 const expireTimer=authinfo.expireIn.getTime() - new Date().getTime();
 if(expireTimer >0){
   this.token=authinfo.token;
